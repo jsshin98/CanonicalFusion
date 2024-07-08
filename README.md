@@ -5,4 +5,6 @@
 
 Official Code for "CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images (ECCV 2024)"
 
+Paper : https://arxiv.org/abs/2407.04345
+
 Coming Soon! :)
