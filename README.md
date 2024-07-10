@@ -36,11 +36,11 @@ Install pytorch3d
 git clone https://github.com/facebookresearch/pytorch3d.git
 cd pytorch3d && pip install -e .
 ```
-Install pyremesh (refer to Chupa([https://github.com/snuvclab/chupa]))
+Install pyremesh (refer to Chupa(https://github.com/snuvclab/chupa))
 ```
 python -m pip install --no-index --find-links ./diff_renderer/src/normal_nds/ext/pyremesh pyremesh
 ```
-Install Flexicubes setting (Kaolin version check: [https://kaolin.readthedocs.io/en/latest/notes/installation.html])
+Install Flexicubes setting (Kaolin version check: https://kaolin.readthedocs.io/en/latest/notes/installation.html)
 ```
 pip install git+https://github.com/NVlabs/nvdiffrast/
 pip install kaolin==0.15.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.0.1_cu118.html
