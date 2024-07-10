@@ -87,7 +87,8 @@ YOUR DATASET PATH
 │   └──pretrained_models
 │       └── lbs_ckpt/
 │       └── main_ckpt/
-
+│           └── COLOR
+│           └── DEPTH_LBS
 ```
 
 ## Inference
