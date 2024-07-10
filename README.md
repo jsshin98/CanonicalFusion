@@ -25,7 +25,7 @@ To run the Demo, it is suggested to install the Conda environment as detailed be
 conda create -n canonicalfusion python=3.9
 conda activate canonicalfusion
 conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-pip install scikit-image scikit-learn pillow numpy matplotlib trimesh fvcore smplx timm tensorboard pytorch_msssim loguru pyrender open3d pickle5 albumentations people-segmentation pymeshlab rembg meshzoo ninja basicsr pysdf
+pip install scikit-image scikit-learn pillow numpy matplotlib trimesh fvcore smplx timm tensorboard pytorch_msssim loguru pyrender open3d pickle5 albumentations people-segmentation pymeshlab rembg meshzoo ninja basicsr pysdf omegaconf
 (Optional) apt-get install -y libsm6 libxext6 libxrender-dev libglib2.0-0 libgl1-mesa-glx 
 pip install opencv-python
 pip install torchmetrics==0.7 pytorch-lightning==2.1
