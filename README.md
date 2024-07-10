@@ -103,10 +103,10 @@ cd ./apps
 python 02_canonical_fusion.py
 ```
 
-### Citation
+## Citation
 Will be updated soon
 
-### Contact
+## Contact
 If you have any question, please feel free to contact us via jsshin98@gm.gist.ac.kr.
 
 Coming Soon! :)
