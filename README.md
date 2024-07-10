@@ -58,7 +58,7 @@ pip install -e .
 ## Dataset
 Our model requires fitted SMPL-X for each image as an input. We provide some examples that are compatible to our model. Note that the pelvis of the SMPL-X should be nearly centered to generate the plausible reconstruction results since we train our model on this setting.
 
-- Download SMPL-X and place it in resources/smpl_models
+- Download SMPL-X and place it in resource/smpl_models
   - SMPL-X : https://smpl-x.is.tue.mpg.de/
 
 ### Dataset Tree
