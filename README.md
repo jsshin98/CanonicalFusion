@@ -1,15 +1,16 @@
 # [ECCV 2024] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images
 
 **CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images (ECCV 2024 ACCEPTED !!)**
+
 **Jisu Shin**, Junmyeong Lee, Seongmin Lee, Min-Gyu Park, Ju-Mi Kang, Ju Hong Yoon, and Hae-Gon Jeon
 
-**[[PAPER]]([https://arxiv.org/abs/2407.04345])**
+**[[PAPER]](https://arxiv.org/abs/2407.04345)**
 
 Not a completed version. Currently on updating..
 
 ## Introduction
 
-__CanonicalFusion.__ We present a novel framework for reconstructing animatable human avatars from multiple images, termed CanonicalFusion.
+__CanonicalFusion.__ We propose CanonicalFusion, which takes multiple frames and generate drivable 3D avatar by integrating individual reconstruction results into the canonical space.
 
 ## Getting Started
 ### Prerequisites (Recommended Version)
@@ -48,6 +49,9 @@ pip install kaolin==0.15.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/t
 ## Dataset
 Our model requires fitted SMPL-X for each image as an input. We provide some examples that are compatible to our model. Note that the pelvis of the SMPL-X should be nearly centered to generate the plausible reconstruction results since we train our model on this setting.
 
+- Download SMPL-X and place it in resources/smpl_models
+  - SMPL-X : https://smpl-x.is.tue.mpg.de/
+  
 ## Inference
 ### Stage 1: Initial reconstruction from a single view
 ```
