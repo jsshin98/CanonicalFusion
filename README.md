@@ -60,7 +60,36 @@ Our model requires fitted SMPL-X for each image as an input. We provide some exa
 
 - Download SMPL-X and place it in resources/smpl_models
   - SMPL-X : https://smpl-x.is.tue.mpg.de/
-  
+
+### Dataset Tree
+You need to organize the dataset as following:
+```
+YOUR DATASET PATH
+├── dataset_name
+│   └── IMG/
+│       └── frame1/
+│           └── 0001.png
+│       └── frame2/
+│           └── 0002.png
+│       └── ...
+│   └── DEPTH/
+│       └── frame1/
+│           └── 0001_front.png
+│           └── 0001_back.png
+│       └── ...
+│   └── SMPL/
+│       └── frame1/
+│           └── 0001.json
+│           └── 0001.obj
+├── resource
+│   └──smpl_models/
+│       └── smplx/
+│   └──pretrained_models
+│       └── lbs_ckpt/
+│       └── main_ckpt/
+
+```
+
 ## Inference
 ### Stage 1: Initial reconstruction from a single view
 ```
