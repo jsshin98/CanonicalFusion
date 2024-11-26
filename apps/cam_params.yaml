@@ -1,0 +1,35 @@
+CAM_1024:
+  width: 1024
+  height: 1024
+  near: 1
+  far: 600
+  fx: 1448.15468787
+  fy: 1448.15468787
+  px: 512.0
+  py: 512.0
+  # distortion coefficients
+  distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  projection: perspective
+  cam_center: [0, 0, 300]
+  voxel_size: 1024
+  real_dist: 300.0
+
+CAM_512:
+  width: 512
+  height: 512
+  near: 1
+  far: 600
+  fx: 724.077343935
+  fy: 724.077343935
+  px: 256.0
+  py: 256.0
+  distx: 0.0
+  disty: 0.0
+  orig_res: 512
+  recon_res: 512
+  voxel_size: 512
+  # distortion coefficients
+  distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  projection: perspective
+  cam_center: [0, 0, 300]
+  real_dist: 300.0

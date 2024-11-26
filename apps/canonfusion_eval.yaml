@@ -1,0 +1,82 @@
+dataset:
+  data_dir: '/jisu/nas2/Human_Dataset/CanonicalFusion-release-sample'
+  dataset_name: 'dataset'
+  color_path: 'IMG'
+  mask_path: 'MASK'
+  depth_path: 'DEPTH'
+  smpl_path: 'SMPLX'
+  normal_path: 'NORMAL/GT'
+  recon_path: 'PRED'
+  diffrend_path: 'MESH/FUSION'
+  cam_config: 'CAM_512'
+
+recon:
+  esr_ckpt: 'resource/pretrained_models/Real-ESRGAN/weights/RealESRGAN_x2plus.pth'
+  lbs_ckpt: 'resource/pretrained_models/lbs_ckpt'
+  recon_ckpt: 'resource/pretrained_models/main_ckpt/FINAL/DEPTH+LBS'
+  color_ckpt: 'resource/pretrained_models/main_ckpt/FINAL/COLOR'
+  model_name: 'BaseModule'
+  model_C_name: 'ColorModule'
+  smpl_resource: 'resource/smpl_models'
+  smpl_semantic: 'resource/smpl_models/body_segmentation/smplx/smplx_vert_segmentation.json'
+  smpl_gender: 'neutral'
+  smpl_type: 'smplx'
+  age: 'adult'
+  smpl_pca: false
+  smpl_num_pca_comp: 12
+  smpl_num_beta: 10
+  smpl_flat_hand: true
+  default_height: 180
+
+canonfusion:
+  res: 1024
+  use_image: true
+  use_normal: true
+  use_color: true
+  use_mesh: false
+  use_multi_frame: false
+  frame_number: [1, 3, 5]
+  use_initial_mesh: false
+  view_angle: ['000', '030', '060', '090', '150', '180', '210', '300', '330']
+  tpose: false
+  flexicubes: false
+  use_side_loss : false
+  use_closeup: false
+  use_text: false
+  device: cuda:0
+  output_root: ../results/
+  save_intermediate: true
+  smpl_related_dir: ../diff_renderer/smpl_related/
+  smpl_type: smplx
+  default_height: 180
+  dual: false
+
+nds:
+  camera: perspective
+  up_axis : 1  # y-axis
+  align_yaw: False
+  initial_num_vertex: 3000
+  refine_num_vertex: 0
+  start_iteration: 0
+  iterations: 2000
+  iterations_color: 3000
+  lr_vertices: 0.001
+  upsample_start: 500
+  upsample_interval: 500
+  save_frequency: 500
+  visualization_frequency: 500
+  visualization_views: []
+  view_sampling_mode: random
+  views_per_iter: 1
+  optim_only_visible: true
+  refine_color: true
+  refine_geo: false
+  replace_hands: true
+  loss:
+    weight_mask: 2.0
+    weight_normal: 0.1 #0.1
+    weight_laplacian: 40.0
+    weight_shading: 1.0
+    weight_side: 0.0
+    weight_color: 1.0 #1.0
+    weight_pose: 0.001
