@@ -10,14 +10,9 @@ from depth_predictor.utils.loader_utils import *
 from depth_predictor.utils.core.im_utils import get_plane_params
 from torchmcubes import grid_interp
 from reconstructor import models
-# import reconstructor.recon_utils as recon_utils
-from lbs_handler.model import LBSModel
+# from lbs_handler.model import LBSModel
 import smplx
-from pysdf import SDF
 from torchmcubes import marching_cubes, grid_interp
-from typing import Tuple
-import open3d as o3d
-from sklearn.neighbors import KDTree
 
 class HumanRecon(nn.Module):
     """Implementation of single-stage SMPLify."""

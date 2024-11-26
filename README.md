@@ -75,14 +75,15 @@ pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/t
 ```
 ## 🧰 Models & Dataset
 ### Download pretrained models and extra data
-Currently, we provide a set of pretrained models for the inference. Models can be downloaded [here](). ```COLOR```, ```DEPTH_LBS``` are needed to be downloaded and put under ```main_ckpt``` and ```best.tar``` is needed to be downloaded and put under ```lbs_ckpt```. Put ```Real-ESRGAN``` also in ```resource/pretrained_models``` directory. Please check the dataset tree below.
+Currently, we provide a set of pretrained models for the inference. Models can be downloaded [here](https://drive.google.com/drive/folders/12cfeM8rOfqHY40-k0S4sMHlAZIM24EG7?usp=sharing
+). ```COLOR```, ```DEPTH_LBS``` are needed to be downloaded and put under ```main_ckpt``` and ```best.tar``` is needed to be downloaded and put under ```lbs_ckpt```. Put ```Real-ESRGAN``` also in ```resource/pretrained_models``` directory. Please check the dataset tree below.
 
 Our model requires fitted SMPL-X for each image as an input. We provide some examples that are compatible to our model. Note that the pelvis of the SMPL-X should be nearly centered to the origin and height should be 180 to generate the plausible reconstruction results since we train our model on this setting. We follow the rendering process of [PIFu](https://github.com/shunsukesaito/PIFu) to render the depth map of fitted SMPL-X.
 
 - Download SMPL-X and place it in resource/smpl_models
   - SMPL-X : https://smpl-x.is.tue.mpg.de/
 
-- Sample dataset download link:
+- Sample dataset download link: Will be released soon!
 
 ### Dataset Tree
 You need to organize the dataset as following:
@@ -139,12 +140,12 @@ YOUR DATASET PATH
 cd ./apps
 python 01_human_recon_eval.py
 ```
-### Stage 2: Refine canonical model with multiple frames - Not open yet. Still fixing..
+<!-- ### Stage 2: Refine canonical model with multiple frames - Not open yet. Still fixing..
 You need to manually set the frame number that you want to use on refinement. (Will be revised soon)
 ```
 cd ./apps
 python 02_canonical_fusion.py
-```
+``` -->
 
 ## ✏️ Citation
 If you find our work meaningful, please consider the citation:
@@ -161,5 +162,3 @@ If you find our work meaningful, please consider the citation:
 
 ## 📱 Contact
 If you have any question, please feel free to contact us via jsshin98@gm.gist.ac.kr.
-
-Coming Soon! :)
