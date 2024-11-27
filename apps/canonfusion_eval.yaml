@@ -1,5 +1,5 @@
 dataset:
-  data_dir: '/jisu/nas2/Human_Dataset/CanonicalFusion-release-sample'
+  data_dir: 'path/to/dataset'
   dataset_name: 'dataset'
   color_path: 'IMG'
   mask_path: 'MASK'

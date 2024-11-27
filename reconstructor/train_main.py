@@ -14,7 +14,6 @@ import dataloaders as ds
 import options
 from train_color2model import train
 from train_utils import *
-from set_path import set_path
 import yaml
 
 torch.backends.cudnn.benchmark = False
@@ -36,9 +35,6 @@ def main(args):
         print_exp_summary(args)
 
     accelerator=None
-
-    # set paths
-    # args.dataset_path, args.cam_path, args.lbs_ckpt_path, args.checkpoints_path, args.checkpoints_ext, args.logs_dir = set_path()
     summary_root = os.path.join(args.logs_dir, args.model_name.lower() + args.exp_name)
 
     with open(args.cam_path) as f:
@@ -47,8 +43,6 @@ def main(args):
     # set GPUs
     torch.cuda.set_device(args.local_rank)
     args.device = torch.device("cuda:{}".format(args.local_rank))
-    # args.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # args.device = accelerator.device
     world_size = torch.cuda.device_count()
 
     # load model
@@ -246,7 +240,7 @@ if __name__ == '__main__':
 
     args.loader_conf = 'DEPTH+LBS'
 
-    args.dataset_path = '/jisu/nas2/Human_Dataset/RECON_TRAIN/'
+    args.dataset_path = 'path/to/dataset' # please put your own dataset path here 
     args.cam_path = '../apps/cam_params.yaml'
     args.lbs_ckpt_path = args.dataset_path + 'resource/pretrained_models/lbs_ckpt'
     args.checkpoints_path = './checkpoints'
@@ -262,8 +256,8 @@ if __name__ == '__main__':
     args.verbose = True  # show status and values.
     args.is_train = True
     args.continue_train = False
-    args.path2pretrained = ''#'/jisu/3DHuman/dataset/CanonicalFusion/resource/pretrained_models/main_ckpt/FINAL/DEPTH+LBS_ALL'
-    args.path2pretrained_C= ''#'./checkpoints/basemodule_DEPTH+LBS'
+    args.path2pretrained = ''
+    args.path2pretrained_C= ''
     args.lbs_ckpt_path = ''
     args.loss_conf = []
     args.loss_conf.append('depth_l2_depth_ssim_depth2norm_l2_depth2norm_cos_lbs_l2')

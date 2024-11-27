@@ -49,7 +49,7 @@ pip install -r requirements.txt
 pip install git+https://github.com/tatsy/torchmcubes.git
 conda install -c conda-forge pyembree
 ```
-#### 3. Additional Installation for pytorch3d, pyopengl, nvdiffrast, kaolin
+<!-- #### 3. Additional Installation for pytorch3d, pyopengl, nvdiffrast, kaolin
 Please check the [compatibility](https://kaolin.readthedocs.io/en/latest/notes/installation.html) and modify it based on your environment (cuda & torch)
 ```
 # Install pytorch3d
@@ -69,21 +69,17 @@ python -m pip install --no-index --find-links ./diff_renderer/normal_nds/ext/pyr
 
 # Install nvdiffrast and kaolin 
 pip install git+https://github.com/NVlabs/nvdiffrast/
-pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.1.0_cu121.html
+pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.1.0_cu121.html 
 
 
-```
+```-->
 ## 🧰 Models & Dataset
 ### Download pretrained models and extra data
-Currently, we provide a set of pretrained models for the inference. Models can be downloaded [here](https://drive.google.com/drive/folders/12cfeM8rOfqHY40-k0S4sMHlAZIM24EG7?usp=sharing
-). ```COLOR```, ```DEPTH_LBS``` are needed to be downloaded and put under ```main_ckpt``` and ```best.tar``` is needed to be downloaded and put under ```lbs_ckpt```. Put ```Real-ESRGAN``` also in ```resource/pretrained_models``` directory. Please check the dataset tree below.
+Currently, we provide a set of pretrained models for the inference. Models and sample dataset for inference can be downloaded [here](https://drive.google.com/drive/folders/1zK_XZ6KGb5h7UNy0gMLVHBjgJPXHl-a5?usp=sharing). Please check the dataset tree below.
 
 Our model requires fitted SMPL-X for each image as an input. We provide some examples that are compatible to our model. Note that the pelvis of the SMPL-X should be nearly centered to the origin and height should be 180 to generate the plausible reconstruction results since we train our model on this setting. We follow the rendering process of [PIFu](https://github.com/shunsukesaito/PIFu) to render the depth map of fitted SMPL-X.
 
-- Download SMPL-X and place it in resource/smpl_models
-  - SMPL-X : https://smpl-x.is.tue.mpg.de/
-
-- Sample dataset download link: Will be released soon!
+Set the dataset path on ```apps/canonfusion_eval.yaml``` data_dir argument.
 
 ### Dataset Tree
 You need to organize the dataset as following:
@@ -114,7 +110,7 @@ YOUR DATASET PATH
 │         └── 000_front.png
 │         └── 000_back.png
 │         └── ...
-│   └── SMPL
+│   └── SMPLX
 │       └── 0001
 │         └── 0001.json
 │         └── 0001.obj
