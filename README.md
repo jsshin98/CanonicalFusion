@@ -8,13 +8,12 @@
 **[[Paper]](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_3)**
 
 ## 📣 News & TODOs
-- [x] **[2024.07]** Release arxiv paper and github page!
-- [x] **[2024.11]** Release code and pretrained weights for single image-based 3D human reconstruction! (First phase)
-- [ ] Release canonical mesh reconstruction code with multiple images via differentiable rendering. (Second phase)
+- [x] Release arxiv paper and github page!
+- [x] Release code and pretrained weights for single image-based 3D human reconstruction! (First phase)
+- [x] Release canonical mesh reconstruction code with multiple images via differentiable rendering. (Second phase)
 
 ## 💡 Introduction
-Our current version contains the **inference code & pretrained weights for 3D human mesh reconstruction** that takes input image and fitted SMPL-X depth map. You can use them for **single image-based 3D human reconstruction evaluation**. 
-We are further planning to open canonical mesh reconstruction part.
+Our current version contains the **inference code & pretrained weights for 3D human mesh reconstruction** that takes input image and fitted SMPL-X depth map. You can use them for **single image-based 3D human reconstruction evaluation**. We also released the second phase, integrating multiple meshes on canonical space, but it is not well-organized to use so I'd like you to take this as a reference only.
 
 ## ⚙️Getting Started
 ### Prerequisites (Recommended Version)
@@ -32,7 +31,6 @@ cd CanonicalFusion
 ```
 
 #### 2. Basic Installation
-
 You first need to build Docker image with [nvdiffrast](https://nvlabs.github.io/nvdiffrast/#linux). 
 (This is not required to current evaluation code, but **required for differentiable rendering step**, which will also be published soon.)
 
@@ -49,7 +47,8 @@ pip install -r requirements.txt
 pip install git+https://github.com/tatsy/torchmcubes.git
 conda install -c conda-forge pyembree
 ```
-<!-- #### 3. Additional Installation for pytorch3d, pyopengl, nvdiffrast, kaolin
+
+#### 3. Additional Installation for pytorch3d, pyopengl, nvdiffrast, kaolin (necessary for differentiable rendering parts - second phase)
 Please check the [compatibility](https://kaolin.readthedocs.io/en/latest/notes/installation.html) and modify it based on your environment (cuda & torch)
 ```
 # Install pytorch3d
@@ -63,19 +62,18 @@ pip install -e .
 cd accelerate
 pip install -e .
 
-# Those are for Differentiable rendering.. not necessary for current code
 # Install pyremesh (refer to Chupa:https://github.com/snuvclab/chupa)
 python -m pip install --no-index --find-links ./diff_renderer/normal_nds/ext/pyremesh pyremesh
 
 # Install nvdiffrast and kaolin 
 pip install git+https://github.com/NVlabs/nvdiffrast/
 pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.1.0_cu121.html 
+```
 
-
-```-->
 ## 🧰 Models & Dataset
 ### Download pretrained models and extra data
-Currently, we provide a set of pretrained models for the inference. Models and sample dataset for inference can be downloaded [here](https://drive.google.com/drive/folders/1zK_XZ6KGb5h7UNy0gMLVHBjgJPXHl-a5?usp=sharing). Please check the dataset tree below.
+Currently, we provide a set of pretrained models for the inference. Models and sample dataset for inference can be downloaded [here](https://drive.google.com/drive/folders/1zK_XZ6KGb5h7UNy0gMLVHBjgJPXHl-a5?usp=sharing). **Note that we also publish the checkpoints not using SMPLX for your convenience on evaluation. Check ```DEPTH_LBS_WO_SMPLX & COLOR_WO_SMPLX``` on the above link. Of course you have to modify the network a bit not to take the SMPLX guidance as input. This will decrease the performance a bit but there should be no big difference.**
+Please check the dataset tree below. For the rendering code, we provide example scripts to render images so check it if you need them (you might modify the code according to our needs.) 
 
 Our model requires fitted SMPL-X for each image as an input. We provide some examples that are compatible to our model. Note that the pelvis of the SMPL-X should be nearly centered to the origin and height should be 180 to generate the plausible reconstruction results since we train our model on this setting. We follow the rendering process of [PIFu](https://github.com/shunsukesaito/PIFu) to render the depth map of fitted SMPL-X.
 
@@ -136,12 +134,12 @@ YOUR DATASET PATH
 cd ./apps
 python 01_human_recon_eval.py
 ```
-<!-- ### Stage 2: Refine canonical model with multiple frames - Not open yet. Still fixing..
-You need to manually set the frame number that you want to use on refinement. (Will be revised soon)
+### Stage 2: Refine canonical model with multiple frames - Still fixing.. Not complete.
+You need to manually set the frame number that you want to use on refinement. You need to know the view angle of all the frames and put the frame numbers that you want to integrate on ```apps/canonfusion_eval.yaml``` file.
 ```
 cd ./apps
 python 02_canonical_fusion.py
-``` -->
+```
 
 ## ✏️ Citation
 If you find our work meaningful, please consider the citation:

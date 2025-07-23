@@ -1,0 +1,85 @@
+KETI_renderer:
+  width: 1024
+  height: 1024
+  near: 1
+  far: 600
+  fx: 1448.15468787
+  fy: 1448.15468787
+  px: 512.0
+  py: 512.0
+  distx: 0.0
+  disty: -0.0
+  orig_res: 1024
+  recon_res: 1024
+  voxel_size: 512
+  cmin: [0, 0, 300]
+  cmax: [0, 0, 300]
+  view_idx: [30, 60, 90]
+  # view_idx: [0, 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 340, 345, 350, 355, 356, 357, 358, 359]
+  pitch: [0]
+  hmin: 180
+  hmax: 180
+  real_dist: 300.0
+  projection: perspective
+  # indoor lighting condition
+  light_num: 30
+  light_direction: [0, -0.7, -1]
+  light_intensity_ambient: 0.8
+  light_intensity_directional: 0.5
+
+
+KETI_ECCV2024:
+  width: 1024
+  height: 1024
+  near: 1
+  far: 600
+  fx: 1448.15468787
+  fy: 1448.15468787
+  px: 512.0
+  py: 512.0
+  distx: 0.0
+  disty: 0.0
+  real_dist: 300.0
+  orig_res: 1024
+  recon_res: 1024
+  voxel_size: 1024
+  cmin: [ 0, 0, 300 ]
+  cmax: [ 0, 0, 300 ]
+  pitch: [0, 1, 1]
+  hmin: 180
+  hmax: 180
+  view_idx: [0, 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 340, 345, 350, 355, 356, 357, 358, 359]
+  projection: perspective
+  # indoor lighting condition 
+  light_num: 10
+  light_direction: [0, -0.7, -1]
+  light_intensity_ambient: 0.8
+  light_intensity_directional: 0.5
+# use Dell WebCam intrinsic parameters
+#Famoz2023_webcam:
+#  width: 1024
+#  height: 1024
+#  near: 1
+#  far: 600
+#  fx: 1064.77037037
+#  fy: 1064.77037037
+#  px: 512.0
+#  py: 820.0
+#  distx: 0.0
+#  disty: 0.0
+#  real_dist: 220.0
+#  orig_res: 1024
+#  recon_res: 1024
+#  voxel_size: 512
+#  cmin: [ 0, 60, 220 ]
+#  cmax: [ 0, 60, 220 ]
+#  hmin: 170
+#  hmax: 170
+#  view_idx: [0]
+#  projection: perspective
+#  # indoor lighting condition
+#  light_direction: [0, -0.7, -1]
+#  light_intensity_ambient: 0.8
+#  light_intensity_directional: 0.5
+#  light_intensity_ambient: 0.8
+#  light_intensity_directional: 0.5
