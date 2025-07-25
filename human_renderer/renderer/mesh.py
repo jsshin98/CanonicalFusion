@@ -292,6 +292,9 @@ def load_file2info(mesh_file, with_normal=False, with_texture=False):
     face_norm_data = []
     face_uv_data = []
 
+    if isinstance(mesh_file, list):
+        mesh_file = mesh_file[0]
+
     if isinstance(mesh_file, str):
         f = open(mesh_file, "r")
     else:
@@ -405,6 +408,8 @@ def load_file2mesh(mesh_file, texture, with_normal=False, with_texture=False):
         if values[0] == 'v':
             v = list(map(float, values[1:4]))
             vertex_data.append(v)
+            # vt = list(map(float, values[4:6]))
+            # uv_data.append(vt)
         elif values[0] == 'vn':
             vn = list(map(float, values[1:4]))
             norm_data.append(vn)
@@ -466,162 +471,42 @@ def load_file2mesh(mesh_file, texture, with_normal=False, with_texture=False):
     vertices = np.array(vertex_data)
     visuals = np.array(vertex_colors)
     faces = np.array(face_data) - 1
-    # face_uvs = np.array(face_uv_data) - 1
-    # vertices, faces, mid_uvs = subdivide_keti(vertices, uv_data, faces, face_uvs)
-    # uvs = np.vstack((visuals, mid_uvs))
-    # vertex_colors = uvs
 
     vertex_colors = visuals
-    # texture = np.flip(texture, 0)
     vertex_colors = [[int(item[0] * w), int(item[1] * h)] for item in vertex_colors]
-    # vertex_colors = [texture[item[1], item[0], :] for item in vertex_colors]
-    cnt = 0
-    for item in vertex_colors:
-        u = int(item[1])
-        v = int(item[0])
-        if u == texture.shape[0]:
-            u -= 1
-        if v == texture.shape[1]:
-            v -= 1
+
+    for cnt, item in enumerate(vertex_colors):
+        u = int(item[0])
+        v = int(item[1])
+        u = w - 1 if u >= w else u
+        v = h - 1 if v >= h else v
+        # if u == texture.shape[0]:
+        #     u -= 1
+        # if v == texture.shape[1]:
+        #     v -= 1
         vertex_colors[cnt] = texture[u, v, :]
-        cnt += 1
+        # cnt += 1
 
     visuals = np.array(vertex_colors)
-    mesh = trimesh.Trimesh(vertices=vertices, faces=faces, vertex_colors=visuals, process=True)
+    mesh = trimesh.Trimesh(vertices=vertices,
+                           faces=faces,
+                           vertex_colors=visuals,
+                           process=False)
 
     return mesh
 
-def load_obj_mesh2(mesh_file, texture, with_normal=False, with_texture=False):
-    vertex_data = []
-    norm_data = []
-    uv_data = []
-    dict = collections.defaultdict(int)
 
-    face_data = []
-    face_norm_data = []
-    face_uv_data = []
+def compute_tangent_from_normals(normals):
+    c1 = np.cross(normals, np.array([0, 1, 0.0]))
+    tan = c1
+    normalize_v3(tan)
+    btan = np.cross(normals, tan)
+    return tan, btan
 
-    if isinstance(mesh_file, str):
-        f = open(mesh_file, "r")
-    else:
-        f = mesh_file
-
-    for line in f:
-        if isinstance(line, bytes):
-            line = line.decode("utf-8")
-        if line.startswith('#'):
-            continue
-        values = line.split()
-        if not values:
-            continue
-        if values[0] == 'v':
-            v = list(map(float, values[1:4]))
-            vertex_data.append(v)
-        elif values[0] == 'vn':
-            vn = list(map(float, values[1:4]))
-            norm_data.append(vn)
-        elif values[0] == 'vt':
-            vt = list(map(float, values[1:3]))
-            uv_data.append(vt)
-        elif values[0] == 'f':
-            # quad mesh
-            if len(values) > 4:
-                f = list(map(lambda x: int(x.split('/')[0]), values[1:4]))
-                face_data.append(f)
-                f = list(map(lambda x: int(x.split('/')[0]), [values[3], values[4], values[1]]))
-                face_data.append(f)
-            # tri mesh
-            else:
-                f = list(map(lambda x: int(x.split('/')[0]), values[1:4]))
-                face_data.append(f)
-
-            # deal with texture
-            if len(values[1].split('/')) >= 2:
-                # quad mesh
-                if len(values) > 4:
-                    f = list(map(lambda x: int(x.split('/')[1]), values[1:4]))
-                    face_uv_data.append(f)
-                    f = list(map(lambda x: int(x.split('/')[1]), [values[3], values[4], values[1]]))
-                    face_uv_data.append(f)
-                # tri mesh
-                elif len(values[1].split('/')[1]) != 0:
-                    f_c = list(map(lambda x: int(x.split('/')[1]), values[1:4]))
-                    face_uv_data.append(f_c)
-                    f = list(map(lambda x: int(x.split('/')[0]), values[1:4]))
-                    dict[f[0] - 1] = f_c[0] - 1
-                    dict[f[1] - 1] = f_c[1] - 1
-                    dict[f[2] - 1] = f_c[2] - 1
-                else:
-                    face_uv_data.append([1, 1, 1])
-
-            # deal with normal
-            if len(values[1].split('/')) == 3:
-                # quad mesh
-                if len(values) > 4:
-                    f = list(map(lambda x: int(x.split('/')[2]), values[1:4]))
-                    face_norm_data.append(f)
-                    f = list(map(lambda x: int(x.split('/')[2]), [values[3], values[4], values[1]]))
-                    face_norm_data.append(f)
-                # tri mesh
-                elif len(values[1].split('/')[2]) != 0:
-                    f = list(map(lambda x: int(x.split('/')[2]), values[1:4]))
-                    face_norm_data.append(f)
-
-    vertex_colors = []
-    for k in range(len(vertex_data)):
-        if k in dict:
-            vertex_colors.append(uv_data[dict[k]])
-        else:
-            vertex_colors.append([0.0, 0.0])
-
-    w, h = texture.shape[0], texture.shape[1]
-
-    vertices = np.array(vertex_data)
-    visuals = np.array(vertex_colors)
-    faces = np.array(face_data) - 1
-    # face_uvs = np.array(face_uv_data) - 1
-
-    # vertices, faces, mid_uvs = subdivide_keti(vertices, uv_data, faces, face_uvs)
-    # uvs = np.vstack((visuals, mid_uvs))
-    # vertex_colors = uvs
-
-    vertex_colors = visuals
-    # texture = np.flip(texture, 0)
-    vertex_colors = [[int(item[0] * w), int(item[1] * h)] for item in vertex_colors]
-    vertex_colors = [texture[item[1], item[0], :] for item in vertex_colors]
-    visuals = np.array(vertex_colors)
-    mesh = trimesh.Trimesh(vertices=vertices, faces=faces, vertex_colors=visuals, process=True)
-    # mesh.show()
-
-    # if with_texture and with_normal:
-    #     uvs = np.array(uv_data)
-    #     face_uvs = np.array(face_uv_data) - 1
-    #     norms = np.array(norm_data)
-    #     if norms.shape[0] == 0:
-    #         norms = compute_normal(vertices, faces)
-    #         face_normals = faces
-    #     else:
-    #         norms = normalize_v3(norms)
-    #         face_normals = np.array(face_norm_data) - 1
-    #     return vertices, visuals, faces, norms, face_normals, uvs, face_uvs, mesh
-    #
-    # if with_texture:
-    #     uvs = np.array(uv_data)
-    #     face_uvs = np.array(face_uv_data) - 1
-    #     return vertices, faces, uvs, face_uvs
-    #
-    # if with_normal:
-    #     norms = np.array(norm_data)
-    #     norms = normalize_v3(norms)
-    #     face_normals = np.array(face_norm_data) - 1
-    #     return vertices, faces, norms, face_normals
-
-    return mesh
-    
 def compute_tangent(vertices, faces, normals, uvs, faceuvs):
     # NOTE: this could be numerically unstable around [0,0,1]
     # but other current solutions are pretty freaky somehow
-    c1 = np.cross(normals, np.array([0,1,0.0]))
+    c1 = np.cross(normals, np.array([0, 1, 0.0]))
     tan = c1
     normalize_v3(tan)
     btan = np.cross(normals, tan)
