@@ -1,0 +1,347 @@
+# new configuration file format for 2024 IOYS photobooth
+# Feb. 2, 2024.
+# by M.Park
+# ------------------------------------------------------------------------- #
+# Structure of generated data  (DATA_ROOT, DATASET must be set in the script)
+# Naming criterion and directory structure
+# > DATA_ROOT/DATASET(RP/IOYS/TH2.0)
+#   > COLOR           (rendered images with lighting, 1024 x 1024 resolution)
+#     > DIFFUSE/DATA/0_0_00_front(back).png                   (with lighting)
+#     > ALBEDO/DATA/0_0_00_front(back).png                 (without lighting)
+#   > DEPTH
+#     > GT/DATA/0_0_00_front(back).png(lighting does not change depth/normal)
+#     > GT_SMPLX/DATA/0_0_00_front(back).png
+#   > NORMAL
+#     > GT/DATA/0_0_00_front(back).png
+#     > GT_SMPLX/DATA/0_0_00_front(back).png
+#   > MASK/DATA/0_0_00.png          (front and back view masks are identical)
+#   > PARAM
+#     > PRT/DATA/0_0_00.json(pkl)                                  (lighting)
+#     > CAM/DATA/0_0_00.json(pkl)                                    (camera)
+#   > LBS (optional, not implemented yet)
+#     > GT/DATA/0_0_00_front(back).png
+#   > SMPLX (smpl parameters)
+#     > GT/DATA/0_0_00.json
+### We use UV coordinate to train implicit functions                        #
+### Set this to false if you train explicit networks (depth/normal maps)    #
+#   > UV_COLOR/DATA/0_0_00.png            (color images in the UV coordinate)
+#   > UV_POS/DATA/0_0_00.png             (position maps in the UV coordinate)
+#   > UV_NORMAL/DATA/0_0_00.png            (normal maps in the UV coordinate)
+#   > UV_MASK/DATA/0_0_00.png          (foreground mask in the UV coordinate)
+# ------------------------------------------------------------------------- #
+#   Image naming criterion
+#   > 000_000_000.png (yaw, pitch, light)
+# ------------------------------------------------------------------------- #
+
+CAM:
+  width: 1024
+  height: 1024
+  near: 1
+  far: 600
+  fx: 1448.15468787
+  fy: 1448.15468787
+  px: 512.0
+  py: 512.0
+  # distortion coefficients
+  distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  projection: perspective
+  cam_center: [0, 0, 300]
+  #  pose_detector: none  # none, openpose, openpifpaf (save pose)
+
+TRAIN:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: true
+  render_smpl: true  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: true
+  smpl_mask: true
+  smpl_back: true
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: true  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: true
+  scan_normal: true
+  scan_mask: true
+  scan_back: true
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: true
+  lighting: [natural, random]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [0.8, 0.2]    # lighting probability
+  num_lights: 30
+  uniform_sampling: false
+  interval: 10
+  view_idx: [0, 3, 5, 10, 350, 355, 357] # use this if uniform rendering is false
+  pitch: [0, 2, 358]
+  default_height: 180
+  h_range: [165, 180]  # height will be range in 170-180cm (random)
+
+SMPL:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: false
+  render_smpl: true  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: false
+  smpl_mask: false
+  smpl_back: true
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: false  # render scan models if obj files exist
+  scan_diffuse: true  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: true
+  scan_normal: true
+  scan_mask: true
+  scan_back: true
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: true
+  lighting: [natural, random]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [0.8, 0.2]    # lighting probability
+  num_lights: 30
+  uniform_sampling: false
+  interval: 10
+  view_idx: [0] # use this if uniform rendering is false
+  pitch: [0]
+  default_height: 180
+  h_range: [180]  # height will be range in 170-180cm (random)
+
+INHO:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: true
+  render_smpl: true  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: true
+  smpl_mask: true
+  smpl_back: true
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: true  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: true
+  scan_normal: true
+  scan_mask: true
+  scan_back: true
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: true
+  lighting: [natural, random]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [0.8, 0.2]    # lighting probability
+  num_lights: 1
+  uniform_sampling: true
+  interval: 10
+  view_idx: [0, 3, 5, 10, 350, 355, 357] # use this if uniform rendering is false
+  pitch: [0, 5, 10, 350, 355]
+  default_height: 180
+  h_range: [165, 180]  # height will be range in 170-180cm (random)
+
+NVS123:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: true
+  render_smpl: true  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: true
+  smpl_mask: false
+  smpl_back: false
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: true  # diffuse images generated with spherical harmonics
+  scan_albedo: false  # render image without lighting (intrinsic color)
+  scan_depth: true
+  scan_normal: true
+  scan_mask: true
+  scan_back: true
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: false
+  lighting: [natural]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [1.0]    # lighting probability
+  num_lights: 30
+  uniform_sampling: true
+  uniform_light: true  # same lights for different views.
+  interval: 10
+  view_idx: [0] # use this if uniform rendering is false
+  pitch: [0]
+  default_height: 180  # normalized space.
+  h_range: [1]  # height will be range in 170-180cm (random)
+
+VAE:
+#  projection: perspective
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: true
+  render_smpl: true  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: true
+  smpl_mask: false
+  smpl_back: false
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: false  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: true
+  scan_normal: true
+  scan_mask: false
+  scan_back: false
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: false
+  lighting: [natural]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [1.0]    # lighting probability
+  num_lights: 30
+  uniform_sampling: true
+  uniform_light: true  # same lights for different views.
+  interval: 10
+  view_idx: [0] # use this if uniform rendering is false
+  pitch: [0]
+  default_height: 180
+  h_range: [170, 180]  # height will be range in 170-180cm (random)
+
+CES:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: false
+  render_smpl: false  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: false
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: false
+  smpl_mask: false
+  smpl_back: false
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: true  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: false
+  scan_normal: false
+  scan_mask: true
+  scan_back: false
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_uv_mask: false
+  scan_uv_normal: false
+  scan_uv_pos: false
+  render_densepose: false
+  lighting: [natural]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [1.0]    # lighting probability
+  num_lights: 10
+  uniform_sampling: false
+  interval: 15
+  # view_idx: [0, 3, 5, 10, 350, 355, 357] # use this if uniform rendering is false
+  view_idx: [0, 2, 4, 6, 8, 10, 350, 352, 354, 356, 358]
+  pitch: [0]
+  default_height: 180
+  h_range: [180]  # height will be range in 170-180cm (random)
+
+GT_RENDER:  # to fit smpl models (separate directory required)
+  use_texture_map: true
+  renderer: opengl
+  render_smpl: false  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: false
+  smpl_normal: false
+  smpl_mask: false
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_back: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: false  # diffuse images generated with spherical harmonics
+  scan_albedo: true  # render image without lighting (intrinsic color)
+  scan_depth: false
+  scan_normal: false
+  scan_mask: false
+  scan_param: true
+  scan_uv: false # render uv pos, texture maps if this is true
+  scan_back: false
+  render_densepose: false
+  lighting: [natural]  # list of lighting styles: 'natural', 'famous', 'random' illumination
+  lighting_prob: [1.0]  # lighting probability
+  num_lights: 1
+  uniform_sampling: true
+  interval: 15
+  pitch: [0]
+  default_height: 180
+  h_range: [180]  # height will be range 180cm
+
+IMPLICIT:
+  model_type: smplx
+  renderer: opengl
+  use_texture_map: true
+  render_smpl: false  # render SMPL depth maps if smpl meshes/parameters exist
+  smpl_depth: true
+  smpl_albedo: false
+  smpl_diffuse: false
+  smpl_normal: true
+  smpl_mask: true
+  smpl_back: true
+  smpl_uv: false # render uv pos, texture maps if this is true
+  smpl_uv_mask: false
+  smpl_uv_normal: false
+  smpl_uv_pos: false
+  render_scan: true  # render scan models if obj files exist
+  scan_diffuse: false  # diffuse images generated with spherical harmonics
+  scan_albedo: false  # render image without lighting (intrinsic color)
+  scan_depth: false
+  scan_normal: false
+  scan_mask: false
+  scan_back: false
+  scan_param: true
+  scan_uv: true  # render uv pos, texture maps if this is true
+  scan_uv_mask: true  # save these as pkl file.
+  scan_uv_normal: false
+  scan_uv_pos: true
+  render_densepose: false
+  lighting: [natural, random]  # list of lighting styles: 'natural', 'random' illumination
+  lighting_prob: [0.8, 0.2]    # lighting probability
+  num_lights: 30
+  uniform_sampling: false
+  interval: 10
+  view_idx: [0, 3, 5, 10, 350, 355, 357] # use this if uniform rendering is false
+  pitch: [0, 2, 358]
+  default_height: 180
+  h_range: [165, 180]  # height will be range in 170-180cm (random)

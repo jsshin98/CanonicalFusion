@@ -1,0 +1,55 @@
+DEFAULT:
+  model_type: smplx
+  gender: neutral
+  use_pca: true
+  num_betas: 10
+  num_pca_comp: 6
+  age: adult
+  ext: pkl
+  use_uv: false
+  use_flat_hand: false
+  use_face_contour: false
+
+UV_MAPPING:
+  model_type: smplx
+  gender: neutral
+  use_pca: true
+  num_betas: 10
+  num_pca_comp: 6
+  age: adult
+  ext: pkl
+  use_uv: true
+  use_flat_hand: true
+  use_face_contour: false
+
+EZMOCAP:
+  model_type: smplx
+  use_pca: true
+  gender: neutral
+  num_betas: 10
+  num_pca_comp: 6
+  age: adult
+  ext: pkl
+  use_flat_hand: true
+  use_face_contour: true
+  use_uv: true
+
+TH:
+  model: smplx
+  gender: neutral
+  use_pca: false
+  num_betas: 10
+  num_pca_comp: 6
+  age: adult
+  use_flat_hand: false
+  use_face_contour: true
+
+IOYS:
+  model: smplx
+  gender: neutral
+  use_pca: false
+  num_betas: 10
+  num_pca_comp: 6
+  age: adult
+  use_flat_hand: false
+  use_face_contour: true
